@@ -76,11 +76,11 @@ def convert_mp4_aac_get_stringa(
     stringa = (
         f"ffmpeg -v quiet -stats -y "
         + f'-i "{path_file_video_origin}" '
-        + "-c:v libx264 "
+        + "-c:v h264_nvenc "
         + f"-crf {str(crf)} "
         + f"-maxrate {str(maxrate)}M "
         + f"-bufsize {str(bufsize)}M "
-        + "-preset ultrafast "
+        + "-preset fast "
         + "-flags +global_header "
         + "-pix_fmt yuv420p "
         + "-profile:v baseline "
