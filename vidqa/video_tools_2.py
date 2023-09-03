@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import logging
 import os
-import re
 
 
 def convert_only_audio(
@@ -19,27 +18,11 @@ def convert_only_audio(
     logging.info(
         "Convert video extension without reencode: %s", path_file_video_origin
     )
-    # Obtenha o nome do arquivo de origem sem a extensão
-    nome_arquivo_origem = os.path.splitext(os.path.basename(path_file_video_origin))[0]
-
-    # Separar o nome do arquivo da extensão
-    nome_base, extensao = os.path.splitext(nome_arquivo_origem)
-
-    # Remover conteúdo entre colchetes usando expressão regular
-    padrao = r'\[.*?\]'
-    nome_limpo = re.sub(padrao, '', nome_base).strip()
-
-    # Adicionar "By: @Sk4rFx" ao título limpo
-    novo_titulo = f"{nome_limpo} -> By: @Sk4rFx <-"
 
     stringa = (
         f'ffmpeg -v quiet -stats -y -i "{path_file_video_origin}" '
         + "-vcodec copy "
-        + "-map 0 "
-        + "-map a "
-        + "-map s "
-        + "-c:s srt "
-        + f'-metadata title="{novo_titulo}" '
+        + "-c:s copy "
         + f'-c:a aac "{path_file_video_dest}"'
     )
     print("\n", stringa)
@@ -60,29 +43,11 @@ def convert_mp4_wo_reencode(
     logging.info(
         "Convert video extension without reencode: %s", path_file_video_origin
     )
-    # Obtenha o nome do arquivo de origem sem a extensão
-    nome_arquivo_origem = os.path.splitext(os.path.basename(path_file_video_origin))[0]
-
-    # Separar o nome do arquivo da extensão
-    nome_base, extensao = os.path.splitext(nome_arquivo_origem)
-
-    # Remover conteúdo entre colchetes usando expressão regular
-    padrao = r'\[.*?\]'
-    nome_limpo = re.sub(padrao, '', nome_base).strip()
-
-    # Adicionar "By: @Sk4rFx" ao título limpo
-    novo_titulo = f"{nome_limpo} -> By: @Sk4rFx <-"
 
     stringa = (
         f'ffmpeg -v quiet -stats -y -i "{path_file_video_origin}" '
-        + "-map 0 "
-        + "-map a "
-        + "-map s "
-        + "-c:s srt "
-        + "-c:v copy "
-        + "-c:a copy "
-        + f'-metadata title="{novo_titulo}" '
-        + f'"{path_file_video_dest}"'
+        + "-vcodec copy "
+        + f'-acodec copy "{path_file_video_dest}"'
     )
     print("\n", stringa)
     os.system(stringa)
@@ -105,18 +70,6 @@ def convert_mp4_aac_get_stringa(
     Returns:
         str: ffmpeg string command
     """
-    # Obtenha o nome do arquivo de origem sem a extensão
-    nome_arquivo_origem = os.path.splitext(os.path.basename(path_file_video_origin))[0]
-
-    # Separar o nome do arquivo da extensão
-    nome_base, extensao = os.path.splitext(nome_arquivo_origem)
-
-    # Remover conteúdo entre colchetes usando expressão regular
-    padrao = r'\[.*?\]'
-    nome_limpo = re.sub(padrao, '', nome_base).strip()
-
-    # Adicionar "By: @Sk4rFx" ao título limpo
-    novo_titulo = f"{nome_limpo} -> By: @Sk4rFx <-"
 
     crf = float(flags.get("crf", 18))
     maxrate = float(flags.get("maxrate", 4))
@@ -131,7 +84,7 @@ def convert_mp4_aac_get_stringa(
         + "-preset medium "
         + "-flags +global_header "
         + "-vf format=yuv420p "
-        + "-profile:v main "
+        + "-profile:v baseline "
         + "-movflags +faststart "
         + "-map 0 "
         + "-c:a aac "
