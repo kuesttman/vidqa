@@ -26,7 +26,7 @@ def convert_only_audio(
     nome_base, extensao = os.path.splitext(nome_arquivo_origem)
 
     # Remover conteúdo entre colchetes usando expressão regular
-    padrao = r'\[.*?\]'
+    padrao = r'\[.+?\]|\..+?$'
     nome_limpo = re.sub(padrao, '', nome_base).strip()
 
     # Adicionar "By: @Sk4rFx" ao título limpo
@@ -67,7 +67,7 @@ def convert_mp4_wo_reencode(
     nome_base, extensao = os.path.splitext(nome_arquivo_origem)
 
     # Remover conteúdo entre colchetes usando expressão regular
-    padrao = r'\[.*?\]'
+    padrao = r'\[.+?\]|\..+?$'
     nome_limpo = re.sub(padrao, '', nome_base).strip()
 
     # Adicionar "By: @Sk4rFx" ao título limpo
@@ -112,7 +112,7 @@ def convert_mp4_aac_get_stringa(
     nome_base, extensao = os.path.splitext(nome_arquivo_origem)
 
     # Remover conteúdo entre colchetes usando expressão regular
-    padrao = r'\[.*?\]'
+    padrao = r'\[.+?\]|\..+?$'
     nome_limpo = re.sub(padrao, '', nome_base).strip()
 
     # Adicionar "By: @Sk4rFx" ao título limpo
