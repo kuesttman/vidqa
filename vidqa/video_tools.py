@@ -138,6 +138,7 @@ def convert_mp4_aac_get_stringa(
         + "-map a "
         + "-map s "
         + "-c:s srt "
+        + f'-metadata title="{novo_titulo}" '
         + f'"{path_file_video_dest}"'
     )
     return stringa
