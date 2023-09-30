@@ -163,7 +163,7 @@ def sanitize_files(folder_path: Path):
             list_folders_path_approved,
             list_folders_path_rejected,
         ) = test_folders_has_path_too_long(
-            [folder_path], max_path=250, max_name=150
+            [folder_path], max_path=2048, max_name=2048
         )
 
         if len(list_folders_path_rejected) > 0:
